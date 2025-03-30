@@ -5,12 +5,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Box mover</title>
+    <script src="../loginform.js"></script>
 </head>
 
 <body>
-    <h1>Box mover game</h1>
-    <p>Info about the game</p>
-    <a href="game/">Play now</a>
+    <header>
+        <div id="login_btn"></div>
+    </header>
+
+    <main>
+        <h1>Box mover game</h1>
+        <p>Info about the game</p>
+        <a href="game/">Play now</a>
+    </main>
 </body>
+<script>
+    const login_btn_elem = document.getElementById("login_btn")
+    login_btn_elem.innerHTML = loginbutton(false, '../')
+</script>
 
 </html>

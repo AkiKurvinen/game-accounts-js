@@ -1,6 +1,16 @@
+function toggleLogin() {
+    const login_elem = document.querySelector("#login_btn button")
+    let isloggedin = Boolean(login_elem.getAttribute("loggedin") == "true")
+    login_elem.parentNode.innerHTML = loginbutton(!isloggedin)
+}
 function loginbutton(isLoggedin = false) {
     if (isLoggedin) {
-        return `<button class="account_box"><img src="img/avatars/user_avatar-01.jpg" alt="Account"><span>Test User</span></button>`
+        return `<button class="account_box" loggedin=true onClick="toggleLogin()">
+        <div class="avatar_icon"></div>
+        <span>Test User</span>
+        </button>`
     }
-    return `<button class="account_box"><img src="img/account.svg" alt="Account"><span>Login</span></button>`
+    return `<button class="account_box" loggedin=false onClick="toggleLogin()">
+    <div class="login_icon"></div>
+    <span>Login</span></button>`
 }
