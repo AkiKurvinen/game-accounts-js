@@ -1,10 +1,29 @@
-function toggleLogin() {
-    const login_elem = document.querySelector("#login_btn button")
-    let isloggedin = Boolean(login_elem.getAttribute("loggedin") == "true")
-    login_elem.parentNode.innerHTML = loginbutton(!isloggedin)
+function userIsLoggedin() {
+    const urlParams = new URLSearchParams(window.location.search);
+    let isloggedin = urlParams.get('loggedin')
+    if (!isloggedin || isloggedin == "false" || isloggedin == "null") {
+        return false
+    }
+    return true
 }
-function loginbutton(isLoggedin = false) {
-    if (isLoggedin) {
+
+function toggleLogin() {
+    const urlParams = new URLSearchParams(window.location.search);
+    let isloggedin = urlParams.get('loggedin')
+    if (!isloggedin || isloggedin == "false" || isloggedin == "null") {
+        urlParams.set('loggedin', true);
+    }
+    else {
+        urlParams.set('loggedin', false);
+    }
+    window.location.search = urlParams;
+}
+
+function loginbutton() {
+    const urlParams = new URLSearchParams(window.location.search);
+    let isloggedin = urlParams.get('loggedin')
+
+    if (isloggedin == "true") {
         return `<button class="account_box" loggedin=true onClick="toggleLogin()">
         <div class="avatar_icon"></div>
         <span>Test User</span>
@@ -13,4 +32,6 @@ function loginbutton(isLoggedin = false) {
     return `<button class="account_box" loggedin=false onClick="toggleLogin()">
     <div class="login_icon"></div>
     <span>Login</span></button>`
+
+
 }

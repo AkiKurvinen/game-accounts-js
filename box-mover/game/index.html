@@ -9,7 +9,7 @@
     <script>
         let locationtxt;
         let box_location = [0, 0]
-        let user_id;
+        let user_id = 123;
 
         class Example extends Phaser.Scene {
             constructor() {
@@ -20,7 +20,9 @@
                 this.load.image('rocket', 'img/steelbox.png');
             }
             async getTopScores() {
-                console.log("Call API")
+                const json = { "user_id": user_id, "box_location": box_location }
+
+                console.log("Call API", json)
             }
 
             create() {

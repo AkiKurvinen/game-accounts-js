@@ -4,9 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Box mover</title>
+    <title>Button clicker</title>
     <script src="../loginform.js"></script>
-    <link rel="shortcut icon" href="game/img/box_logo.png" type="image/x-icon">
+    <link rel="shortcut icon" href="game/img/button_logo.png" type="image/x-icon">
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -19,31 +19,30 @@
     </header>
 
     <main>
-        <h1>Box mover game</h1>
+        <h1>Button clicker game</h1>
         <p>Info about the game</p>
         <a href="game/">Play now</a>
         <br>
         <br>
+
     </main>
 </body>
 <script>
     // simulate common authentication API
     const loggedin = userIsLoggedin();
     const login_btn_elem = document.getElementById("login_btn")
-    login_btn_elem.innerHTML = loggedin ? ' Welcome ' : ''
+    login_btn_elem.innerHTML = loggedin ? 'Welcome ' : ''
     login_btn_elem.innerHTML += loginbutton()
     document.querySelector("main").innerHTML += `<a href="../?loggedin=${loggedin}">Back</a>`
 
     // simulate game specific API
-    const account_loggedin = document.querySelector(".account_box").getAttribute("loggedin") == "true"
     const my_stats_elem = document.getElementById("my_stats")
-    if (account_loggedin) {
-        my_stats_elem.innerHTML = 'You left the box at position [200, 300]'
+    if (loggedin) {
+        my_stats_elem.innerHTML += 'Your highest click count is 999'
     }
     else {
         my_stats_elem.innerHTML = 'No user data to display'
     }
 </script>
-
 
 </html>

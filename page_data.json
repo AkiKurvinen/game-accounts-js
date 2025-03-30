@@ -10,7 +10,7 @@
                     {"target": "https://itch.io/", "text":"Follow us on itch.io"}
                 ],
                 "gamelink": "button-clicker/",
-                "gallery": [{"src":"drag-the-box-game.jpg", "alt": "Move the box gameplay"}]
+                "gallery": [{"src":"click-button-game.jpg", "alt": "Move the box gameplay"}]
             }]
         },
         {   "id":"adventure",

@@ -13,8 +13,8 @@
     <div class="logo"><img src="img/logo_white.png" alt="">Logo</div>
     <nav>
         <ul>
-            <li>Action</li>
-            <li>Adventure</li>
+            <li><a href="#action">Action</a></li>
+            <li><a href="#adventure">Adventure</a></li>
         </ul>
     </nav>
     <div id="login_btn"></div>
@@ -26,7 +26,10 @@
 <main>
     <div id="game_list"></div>
 </main>
-<footer>game accounts template</footer>
+<footer>
+    <p>Footer links and credits</p>
+    <i>Game accounts template</i>
+</footer>
 
 <body>
     <script>
@@ -36,7 +39,7 @@
     <script>
         const game_list_elem = document.getElementById("game_list")
 
-        async function getData() {
+        async function getData(isloggedin = false) {
             const url = "./page_data.json";
             try {
                 const response = await fetch(url);
@@ -62,7 +65,7 @@
                                 <h3>${game.name}</h3>
                                 <p>${game.desc}</p>
                                 ${getOtherLinks(game.otherlinks)}
-                                <a href="${game.gamelink}" class="play_btn">Play</a>
+                                <a href="${game.gamelink}?loggedin=${isloggedin}" class="play_btn">Play</a>
                                 
                             </div>
                             <div class="game_gallery">
@@ -81,8 +84,9 @@
                 console.error(error.message);
             }
         }
-
-        getData()
+        const urlParams = new URLSearchParams(window.location.search);
+        let isloggedin = urlParams.get('loggedin')
+        getData(isloggedin)
 
     </script>
 

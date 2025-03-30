@@ -1,0 +1,21 @@
+:root {
+    --primary-main: rgb(0, 113, 189);
+    --secondary-main: #9761ee;
+
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif
+}
+
+#login_btn {
+    background-color: var(--primary-main);
+    padding: 1em;
+    color: white;
+    margin-bottom: 1em;
+}
+
+#my_stats {
+    padding: 1em;
+    background-color: var(--secondary-main);
+}
