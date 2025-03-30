@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game accounts</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="loginform.js"></script>
+</head>
+<header>
+    <div class="logo"><img src="img/logo.png" alt="">Logo</div>
+    <nav>
+        <ul>
+            <li>Action</li>
+            <li>Adventure</li>
+        </ul>
+    </nav>
+    <div id="login_btn"></div>
+</header>
+<main>
+    <nav></nav>
+    <div id="game_list"></div>
+</main>
+
+<body>
+    <script>
+        const login_btn_elem = document.getElementById("login_btn")
+        login_btn_elem.innerHTML = loginbutton(true)
+    </script>
+    <script>
+        const game_list_elem = document.getElementById("game_list")
+
+        async function getData() {
+            const url = "./page_data.json";
+            try {
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error(`Response status: ${response.status}`);
+                }
+
+                const json = await response.json();
+                let html = ""
+                json.sections.forEach(section => {
+                    html += `<section id="${section.id}">`
+                    html += `<h2>${section.name}</h2>`
+                    section.games.forEach(game => {
+                        html += `<div class="game_card">
+                            <div class="game_info">
+                                <h3>${game.name}</h3>
+                            </div>
+                            <div class="game_gallery">
+                                <h3>${game.name}</h3>
+                                <a href="${game.gamelink}">Play</a>
+                            </div>
+`
+
+                    });
+
+                });
+                html += '</section>'
+
+                game_list_elem.innerHTML = html
+            } catch (error) {
+                console.error(error.message);
+            }
+        }
+
+        getData()
+
+    </script>
+
+</body>
+
+</html>
