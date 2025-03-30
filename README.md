@@ -1,2 +1,1 @@
-# game-accounts-js
-Game accounts
+# Game accounts demo
