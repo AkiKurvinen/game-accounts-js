@@ -11,6 +11,7 @@
         let counter_txt;
         let user_id = 123;
 
+
         class Example extends Phaser.Scene {
             constructor() {
                 super();
@@ -24,7 +25,7 @@
                 counter_txt.setText(`Click count: ${click_count}`)
             }
             async saveHiscore() {
-                const json = { "user_id": 123, "hisocre": click_count }
+                const json = { "user_id": 123, "hiscore": click_count }
                 console.log("Call API", json)
             }
 
