@@ -3,6 +3,8 @@
 
 <head>
     <script src="https://cdn.jsdelivr.net/npm/phaser@3.60.0/dist/phaser-arcade-physics.min.js"></script>
+    <link rel="shortcut icon" href="../img/button_logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="assets/loginform.css">
 </head>
 
 <body>
@@ -18,7 +20,7 @@
             }
 
             preload() {
-
+                this.load.html('loginform', 'assets/loginform.html');
             }
             async getTopScores() {
                 click_count++
@@ -37,7 +39,6 @@
                 counter_txt.setText(`Click count: ${click_count}`)
 
                 // button call API
-
                 const button_score = this.add.text(700, 550, 'Save position', {
                     fontFamily: 'Arial',
                     fontSize: '16px',
@@ -87,7 +88,41 @@
                     this.getTopScores()
                 });
 
+                // login form
+                const text = this.add.text(300, 10, 'Please enter your name', { color: 'white', fontSize: '16px ' });
+                const element = this.add.dom(350, 300).createFromCache('loginform');
 
+                element.addListener('click');
+
+                element.on('click', function (event) {
+
+                    if (event.target.name === 'playButton') {
+                        const inputText = this.getChildByName('nameField');
+
+                        //  Have they entered anything?
+                        if (inputText.value !== '') {
+                            //  Turn off the click events
+                            this.removeListener('click');
+
+                            //  Hide the login element
+                            this.setVisible(false);
+
+                            //  Populate the text with whatever they typed in
+                            text.setText(`Welcome ${inputText.value}`);
+                        }
+                        else {
+                            //  Flash the prompt
+                            this.scene.tweens.add({
+                                targets: text,
+                                alpha: 0.2,
+                                duration: 250,
+                                ease: 'Power3',
+                                yoyo: true
+                            });
+                        }
+                    }
+
+                });
             }
 
         }
@@ -97,7 +132,10 @@
             width: 800,
             height: 600,
             parent: 'phaser-example',
-            scene: Example
+            scene: Example,
+            dom: {
+                createContainer: true
+            },
         };
 
         const game = new Phaser.Game(config);
