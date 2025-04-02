@@ -111,6 +111,22 @@
                     return true
                 }
 
+                const mockAutoLogin = () => {
+                    // mock login session
+                    const urlParams = new URLSearchParams(window.location.search);
+                    let isloggedin = urlParams.get('loggedin')
+
+                    let login_success = false
+                    if (isloggedin && isloggedin == "true") {
+                        login_success = true
+                    }
+                    user_id = 123
+                    user_name = "Test User"
+
+                    console.log("Call API - Auto Login", login_success)
+                    return login_success
+                }
+
                 const createAccount = (join_username, join_password, join_repeatpassword) => {
                     const json_response = { "user_id": 456, "username": join_username }
                     console.log("Call API - Join", json_response)
@@ -132,7 +148,25 @@
                 const text = this.add.text(780, 10, 'Not logged in', { color: 'white', fontSize: '16px ' }).setOrigin(1, 0);
                 const html_login_form = this.add.dom(350, 300).createFromCache('loginform');
 
-                html_login_form.addListener('click');
+                // first try to auto login user by session
+                const autologinsuccess = mockAutoLogin()
+                if (autologinsuccess) {
+                    html_login_form.setVisible(false);
+                    text.setText(`Autologged as ${user_name} (${user_id})`);
+
+                    // game specific stuff
+                    const user_click_count = getUserHiscore()
+                    click_count = user_click_count
+                    counter_txt.setText(`Click count: ${user_click_count}`)
+
+                }
+                else {
+                    html_login_form.addListener('click');
+                }
+
+
+
+
 
                 html_login_form.on('click', function (event, login) {
                     if (event.target.name === 'login') {
@@ -150,7 +184,7 @@
                         // game specific stuff
                         const user_click_count = getUserHiscore()
                         click_count = user_click_count
-                        counter_txt.setText(`Click count: ${user_best_score}`)
+                        counter_txt.setText(`Click count: ${user_click_count}`)
 
                         // remove login form
                         this.removeListener('click');

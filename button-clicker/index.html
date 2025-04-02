@@ -21,7 +21,7 @@
     <main>
         <h1>Button clicker game</h1>
         <p>Info about the game</p>
-        <a href="game/">Play now</a>
+        <a href="game/" id="play_link">Play now</a>
         <br>
         <br>
 
@@ -34,6 +34,7 @@
     login_btn_elem.innerHTML = loggedin ? 'Welcome ' : ''
     login_btn_elem.innerHTML += loginbutton()
     document.querySelector("main").innerHTML += `<a href="../?loggedin=${loggedin}">Back</a>`
+    document.getElementById("play_link").setAttribute("href", `game/?loggedin=${loggedin}`)
 
     // simulate game specific API
     const my_stats_elem = document.getElementById("my_stats")

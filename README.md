@@ -16,9 +16,11 @@ Teplate games simulate usage of common authentication API with game specific dat
 - Logged in user can save the progress by pewssing "save button"
 - Previous score is loaded if user logs in
 - Guest users (Not logged in) always start from 0
+- Game automatically logs in if user is logged in on upper level on website
 
 ### Box mover
 - User moves the box by dragging it
 - Box location (x, y) is saved if user is logged in and presses "save button"
 - Box previous location is loaded when user logs in
 - Guest users (Not logged in) always start at box default location
+- Game automatically logs in if user is logged in on upper level on website
