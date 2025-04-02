@@ -9,10 +9,10 @@
 
 <body>
     <script>
-        let click_count = 0;
-        let counter_txt;
-        let user_id = 123;
-
+        var click_count = 0;
+        var counter_txt;
+        var user_id = 0;
+        var user_name = "";
 
         class Example extends Phaser.Scene {
             constructor() {
@@ -22,13 +22,9 @@
             preload() {
                 this.load.html('loginform', 'assets/loginform.html');
             }
-            async getTopScores() {
+            addToCounter() {
                 click_count++
                 counter_txt.setText(`Click count: ${click_count}`)
-            }
-            async saveHiscore() {
-                const json = { "user_id": 123, "hiscore": click_count }
-                console.log("Call API", json)
             }
 
             create() {
@@ -38,8 +34,8 @@
 
                 counter_txt.setText(`Click count: ${click_count}`)
 
-                // button call API
-                const button_score = this.add.text(700, 550, 'Save position', {
+                // button call score API
+                const button_score = this.add.text(700, 550, 'Save score', {
                     fontFamily: 'Arial',
                     fontSize: '16px',
                     color: '#ffffff',
@@ -60,7 +56,7 @@
 
                 button_score.on('pointerdown', () => {
                     button_score.setBackgroundColor('#000');
-                    this.saveHiscore()
+                    saveHiscore()
                 });
 
 
@@ -85,44 +81,110 @@
                 });
 
                 button.on('pointerdown', () => {
-                    this.getTopScores()
+                    this.addToCounter()
                 });
 
-                // login form
-                const text = this.add.text(300, 10, 'Please enter your name', { color: 'white', fontSize: '16px ' });
-                const element = this.add.dom(350, 300).createFromCache('loginform');
+                // Mock API Methods
+                const saveHiscore = () => {
+                    const json = { "user_id": user_id, "hiscore": click_count }
+                    console.log("Call API - Save Hiscore", json)
+                }
 
-                element.addListener('click');
+                const loginUser = (username_txt, login_password) => {
+                    const json = { "user_id": 123, "hiscore": 9, "username": username_txt }
 
-                element.on('click', function (event) {
+                    console.log("Call API - Login", json)
 
-                    if (event.target.name === 'playButton') {
-                        const inputText = this.getChildByName('nameField');
-
-                        //  Have they entered anything?
-                        if (inputText.value !== '') {
-                            //  Turn off the click events
-                            this.removeListener('click');
-
-                            //  Hide the login element
-                            this.setVisible(false);
-
-                            //  Populate the text with whatever they typed in
-                            text.setText(`Welcome ${inputText.value}`);
-                        }
-                        else {
-                            //  Flash the prompt
-                            this.scene.tweens.add({
-                                targets: text,
-                                alpha: 0.2,
-                                duration: 250,
-                                ease: 'Power3',
-                                yoyo: true
-                            });
-                        }
+                    // mock login failed
+                    if (username_txt != login_password) {
+                        return false
                     }
+                    if (!json.hasOwnProperty("user_id")) {
+                        return false
+                    }
+                    user_id = json.user_id
+                    user_name = json.username
 
+                    return true
+                }
+
+                const createAccount = (join_username, join_password, join_repeatpassword) => {
+                    const json = { "user_id": 456, "hiscore": 0, "username": join_username }
+                    console.log("Call API - Join", json)
+
+                    // mock join failed
+                    if (join_password != join_repeatpassword) {
+                        return false
+                    }
+                    if (!json.hasOwnProperty("user_id")) {
+                        return false
+                    }
+                    user_id = json.user_id
+                    user_name = json.username
+
+                    return true
+                }
+
+                // login form - loaded from HTML file
+                const text = this.add.text(780, 10, 'Not logged in', { color: 'white', fontSize: '16px ' }).setOrigin(1, 0);
+                const html_login_form = this.add.dom(350, 300).createFromCache('loginform');
+
+                html_login_form.addListener('click');
+
+                html_login_form.on('click', function (event, login) {
+                    if (event.target.name === 'login') {
+                        const username_txt = this.getChildByID('login_username');
+                        const login_password = this.getChildByID('login_password');
+
+                        if (username_txt.value == '' || login_password.value == '') return
+                        const res = loginUser(username_txt.value, login_password.value);
+
+                        if (!res) {
+                            flash_effect(this)
+                            return
+                        }
+
+                        this.removeListener('click');
+                        this.setVisible(false);
+                        text.setText(`Welcome again ${user_name} (${user_id})`);
+                    }
+                    else if (event.target.name === 'join') {
+                        const join_username = this.getChildByID('join_username');
+                        const join_password = this.getChildByID('join_password');
+                        const join_repeatpassword = this.getChildByID('join_repeatpassword');
+
+                        if (join_username.value == '' || join_password.value == '' || join_repeatpassword.value == '') return
+                        if (join_password.value != join_repeatpassword.value) return
+
+                        const res = createAccount(join_username.value, join_password.value, join_repeatpassword.value);
+
+                        if (!res) {
+                            flash_effect(this)
+                            return
+                        }
+
+                        this.removeListener('click');
+                        this.setVisible(false);
+                        text.setText(`Welcome new ${user_name} (${user_id})`);
+                    }
+                    else if (event.target.name === 'skip') {
+                        this.removeListener('click');
+                        this.setVisible(false);
+                        user_name = '[guest]'
+                        user_id = 0
+                        text.setText(`Welcome ${user_name} (${user_id})`);
+                    }
                 });
+
+                const flash_effect = (target) => {
+                    target.scene.tweens.add({
+                        targets: text,
+                        alpha: 0.2,
+                        duration: 250,
+                        ease: 'Power3',
+                        yoyo: true
+                    });
+                }
             }
 
         }
