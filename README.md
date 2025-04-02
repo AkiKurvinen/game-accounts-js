@@ -13,7 +13,7 @@ Teplate games simulate usage of common authentication API with game specific dat
 
 ### Button clicker
 - User clicks the button to get 1 point
-- Logged in user can save the progress by pewssing "save button"
+- Logged in user can save the progress by pressing "save button"
 - Previous score is loaded if user logs in
 - Guest users (Not logged in) always start from 0
 - Game automatically logs in if user is logged in on upper level on website
