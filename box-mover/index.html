@@ -21,7 +21,7 @@
     <main>
         <h1>Box mover game</h1>
         <p>Info about the game</p>
-        <a href="game/">Play now</a>
+        <a href="game/" id="play_link">Play now</a>
         <br>
         <br>
     </main>
@@ -33,6 +33,7 @@
     login_btn_elem.innerHTML = loggedin ? ' Welcome ' : ''
     login_btn_elem.innerHTML += loginbutton()
     document.querySelector("main").innerHTML += `<a href="../?loggedin=${loggedin}">Back</a>`
+    document.getElementById("play_link").setAttribute("href", `game/?loggedin=${loggedin}`)
 
     // simulate game specific API
     const account_loggedin = document.querySelector(".account_box").getAttribute("loggedin") == "true"

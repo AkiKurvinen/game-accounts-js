@@ -1,7 +1,7 @@
 function userIsLoggedin() {
     const urlParams = new URLSearchParams(window.location.search);
     let isloggedin = urlParams.get('loggedin')
-    if (!isloggedin || isloggedin == "false" || isloggedin == "null") {
+    if (!isloggedin || isloggedin != "true") {
         return false
     }
     return true
