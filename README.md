@@ -1,7 +1,7 @@
 # Game accounts demo
 
 ## Template games
-Teplate games simulate usage of common authentication API with game specific data.  
+Template games simulate usage of common authentication API with game specific data.  
 *User accounts data (e.g. userID, username, password)*
  - is saved in accounts database table
  - is accessed via common auth API  
